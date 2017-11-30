@@ -3,9 +3,8 @@ pragma solidity 0.4.18;
 import "./INation.sol";
 import "./NationStorage.sol";
 import "../common/Initializable.sol";
-import "../ownership/Ownable.sol";
 
-contract Nation is INation, NationStorage, Ownable {
+contract Nation is INation, NationStorage {
 
     uint public number;
 
@@ -16,7 +15,7 @@ contract Nation is INation, NationStorage, Ownable {
     * @notice Upgrade kernel to new implementation at address `_newNation` (CRITICAL!)
     * @param _newNation Address for new kernel code
     */
-    function upgradeNation(address _newNation) onlyOwner external {
+    function upgradeNation(address _newNation) external {
         nationImpl = _newNation;
         UpgradeNation(_newNation);
     }

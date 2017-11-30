@@ -12,10 +12,6 @@ contract NationProxy is NationStorage, DelegateProxy {
         nationImpl = _nationImpl;
     }
 
-    function getNation() public returns (address) {
-        return nationImpl;
-    }
-
     // All calls made to the proxy are forwarded to the nation implementation via a delegatecall
     function () payable public {
         delegatedFwd(nationImpl, msg.data);
