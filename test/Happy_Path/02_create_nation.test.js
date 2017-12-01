@@ -17,17 +17,6 @@ contract('Nation Core Creation Testing', accounts => {
 		})
 	});
 
-	it('Should fail to create a nation without a name', function() {
-		let nationInstance;
-		return Nation.deployed().then(function(instance) {
-			nationInstance = instance;
-			return nationInstance.createNationCore("", "Empty nation description", true, false);
-		}).then(assert.fail)
-			.catch(function(error) {
-				assert(error.message.indexOf('revert') >= 0, "error should be revert");
-			})
-	});
-
 	it('Should be able to create a nation core and receive the create nation event', function() {
 		let nationInstance;
 		return Nation.deployed().then(function(instance) {
@@ -44,17 +33,6 @@ contract('Nation Core Creation Testing', accounts => {
 			assert.equal(nation[3], false, "The nation should not be a virtual nation");
 			assert.equal(nation[4], accounts[0], "The nation founder should be the coinbase account");
 		})
-	});
-
-	it('Should fail to create a nation that already exists', function() {
-		let nationInstance;
-		return Nation.deployed().then(function(instance) {
-			nationInstance = instance;
-			return nationInstance.createNationCore("USA", "Duplicate nation description", true, false);
-		}).then(assert.fail)
-			.catch(function(error) {
-				assert(error.message.indexOf('revert') >= 0, "error should be revert");
-			})
 	});
 
 });

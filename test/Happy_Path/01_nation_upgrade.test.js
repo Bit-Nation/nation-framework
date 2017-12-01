@@ -8,12 +8,14 @@ let NationProxy = artifacts.require('./NationProxy.sol');
 contract('Nation Upgrade Testing', accounts => {
 
 	let nation = {};
+	let nationImpl = {};
 	let nationProxy = {};
 
 	before(async () => {
-		const nationImpl = await Nation.new();
-		nationProxy = await NationProxy.new(nationImpl.address);
-		nation = Nation.at(nationProxy.address);
+		nationImpl = await Nation.new({from: accounts[0]});
+		nationProxy = await NationProxy.new(nationImpl.address, {from: accounts[0]});
+		nation = Nation.at(nationProxy.address, {from: accounts[0]});
+		nation.initialize(accounts[0]);
 	});
 
 	it('gets the correct number', function() {
@@ -31,8 +33,8 @@ contract('Nation Upgrade Testing', accounts => {
 
 	it('successfully upgrades the nation', function() {
 
-		return UpgradedNation.new().then(function(upgradedImpl) {
-			nation.upgradeNation(upgradedImpl.address);
+		return UpgradedNation.new({from: accounts[0]}).then(function(upgradedImpl) {
+			nation.upgradeNation(upgradedImpl.address, {from: accounts[0]});
 			nation = UpgradedNation.at(nationProxy.address);
 			return nation.isUpgraded();
 		}).then(function(upgraded) {
