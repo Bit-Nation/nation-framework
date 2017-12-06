@@ -48,9 +48,6 @@ contract Nation is INation, NationStorage, Initializable {
     uint public numNations;
     address public owner;
 
-    // Temporary variable
-    uint public number;
-
     event UpgradeNation(address indexed newNation);
 
     event NationCoreCreated(address indexed founder, string nationName, uint indexed nationId);
@@ -208,17 +205,6 @@ contract Nation is INation, NationStorage, Initializable {
         require(msg.sender == owner);
         nationImpl = _newNation;
         UpgradeNation(_newNation);
-    }
-
-
-    // Temp testing functions
-
-    function setNumber(uint _number) public {
-        number = _number;
-    }
-
-    function getNumber() public constant returns (uint) {
-        return number;
     }
 
 }

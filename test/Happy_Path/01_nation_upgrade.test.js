@@ -18,17 +18,19 @@ contract('Nation Upgrade Testing', accounts => {
 		nation.initialize(accounts[0]);
 	});
 
-	it('gets the correct number', function() {
-
-		return nation.getNumber().then(function(number) {
-			assert.equal(number.toNumber(), 0, "Should have initialized number to zero.");
-			return nation.setNumber(10);
-		}).then(function(txResult) {
-			return nation.getNumber();
-		}).then(function(number) {
-			assert.equal(number.toNumber(), 10, "Should have initialized number to 10");
-		})
-
+	it('Should be able to create a nation core and receive the create nation event', function() {
+		return nation.createNationCore("USA", "United States of America", true, false)
+			.then(function(txReceipt) {
+				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
+				assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
+				return nation.getNationCore('USA');
+			}).then(function(nation) {
+				assert.equal(nation[0].toNumber(), 1, "Nation Id should be 1");
+				assert.equal(nation[1], "United States of America", "Nation description should have been United States of America");
+				assert.equal(nation[2], true, "The nation should be exists = true");
+				assert.equal(nation[3], false, "The nation should not be a virtual nation");
+				assert.equal(nation[4], accounts[0], "The nation founder should be the coinbase account");
+			})
 	});
 
 	it('successfully upgrades the nation', function() {
@@ -43,12 +45,15 @@ contract('Nation Upgrade Testing', accounts => {
 
 	});
 
-	it('retains the number after upgrading', function() {
+	it('Should be able to get the same nation data out of the upgraded contract', function() {
+		return nation.getNationCore('USA')
+			.then(function(nation) {
+				assert.equal(nation[0].toNumber(), 1, "Nation Id should be 1");
+				assert.equal(nation[1], "United States of America", "Nation description should have been United States of America");
+				assert.equal(nation[2], true, "The nation should be exists = true");
+				assert.equal(nation[3], false, "The nation should not be a virtual nation");
+				assert.equal(nation[4], accounts[0], "The nation founder should be the coinbase account");
+			})
+	})
 
-		return nation.getNumber().then(function(number) {
-			assert.equal(number.toNumber(), 10, "Number should have remained 10 after the upgrade");
-		})
-
-	});
-
-});
+})
