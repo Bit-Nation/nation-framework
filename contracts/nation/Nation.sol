@@ -1,10 +1,9 @@
 pragma solidity 0.4.18;
 
-import "./INation.sol";
 import "./NationStorage.sol";
 import "../common/Initializable.sol";
 
-contract Nation is INation, NationStorage, Initializable {
+contract Nation is NationStorage, Initializable {
 
     struct NationCore {
 
@@ -35,7 +34,6 @@ contract Nation is INation, NationStorage, Initializable {
         bool diplomaticRecognition;
         string decisionMakingProcess;
         string governanceService;
-        bool multiCitizenship;
 
     }
 
@@ -112,8 +110,7 @@ contract Nation is INation, NationStorage, Initializable {
         string _decisionMakingProcess,
         bool _diplomaticRecognition,
         string _governanceService,
-        bool _nonCitizenUse,
-        bool _multiCitizenship
+        bool _nonCitizenUse
     ) {
 
         NationGovernance memory nationGovernance = nationGovernanceMapping[_nationName];
@@ -122,7 +119,6 @@ contract Nation is INation, NationStorage, Initializable {
         _diplomaticRecognition = nationGovernance.diplomaticRecognition;
         _governanceService = nationGovernance.governanceService;
         _nonCitizenUse = nationGovernance.nonCitizenUse;
-        _multiCitizenship = nationGovernance.multiCitizenship;
     }
 
     function createNationCore(string _nationName, string _nationDescription, bool _exists, bool _virtualNation) external {
@@ -178,8 +174,7 @@ contract Nation is INation, NationStorage, Initializable {
         string _decisionMakingProcess,
         bool _diplomaticRecognition,
         string _governanceService,
-        bool _nonCitizenUse,
-        bool _multiCitizenship
+        bool _nonCitizenUse
     ) public {
         require(bytes(_nationName).length > 0);
         require(nationCoreMapping[_nationName].nationId > 0);
@@ -189,8 +184,7 @@ contract Nation is INation, NationStorage, Initializable {
             decisionMakingProcess: _decisionMakingProcess,
             diplomaticRecognition: _diplomaticRecognition,
             governanceService: _governanceService,
-            nonCitizenUse: _nonCitizenUse,
-            multiCitizenship: _multiCitizenship
+            nonCitizenUse: _nonCitizenUse
         });
 
         NationGovernanceSet(_nationName, nationCoreMapping[_nationName].nationId);

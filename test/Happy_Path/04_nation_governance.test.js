@@ -17,7 +17,7 @@ contract('Nation Governance Testing', accounts => {
 	it("Should be able to set a nation's governance", function() {
 		return nationInstance.createNationCore("USA", "United States of America", true, false)
 			.then(function(txReceipt) {
-				return nationInstance.SetNationGovernance('USA', 'Democracy', true, 'Legal Services', false, true);
+				return nationInstance.SetNationGovernance('USA', 'Democracy', true, 'Legal Services', false);
 			}).then(function (txReceipt) {
 				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 				assert.equal(txReceipt.logs[0].event, "NationGovernanceSet", "Event emitted should have been NationGovernanceSet");
