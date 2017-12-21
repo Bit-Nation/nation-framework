@@ -68,6 +68,10 @@ contract Nation is NationStorage, Initializable {
         return nationCoreMapping[_nationName].nationId;
     }
 
+    function getNationName(uint _nationId) public constant returns (string) {
+        return nationIds[_nationId];
+    }
+
     function getNationCore(string _nationName) public constant returns (
         uint _nationId,
         string _nationDescription,
