@@ -9,6 +9,7 @@ services:
     tty: true
     depends_on:
       - testrpc
+    working_dir: /app
 
   testrpc:
     image: harshjv/testrpc
