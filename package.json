@@ -1,0 +1,27 @@
+{
+    "name": "nations",
+    "version": "1.0.0",
+    "description": "",
+    "main": "truffle-config.js",
+    "directories": {
+        "test": "test"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "solidity-coverage": "^0.4.4"
+    },
+    "scripts": {
+        "test": "truffle test",
+        "coverage": "./node_modules/.bin/solidity-coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Bit-Nation/nations-framwork-poc.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Bit-Nation/nations-framwork-poc/issues"
+    },
+    "homepage": "https://github.com/Bit-Nation/nations-framwork-poc#readme"
+}
