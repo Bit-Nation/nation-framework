@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+
+  node:
+    build: .
+    volumes:
+      - ./:/app
+    tty: true
+    depends_on:
+      - testrpc
+    working_dir: /app
+
+  testrpc:
+    image: harshjv/testrpc
+    tty: true

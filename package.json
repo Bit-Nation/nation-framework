@@ -6,7 +6,10 @@
     "directories": {
         "test": "test"
     },
-    "dependencies": {},
+    "dependencies": {
+        "coveralls": "^3.0.0",
+        "truffle": "^4.0.4"
+    },
     "devDependencies": {
         "solidity-coverage": "^0.4.4"
     },
