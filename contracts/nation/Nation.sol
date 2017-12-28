@@ -1,8 +1,13 @@
-pragma solidity 0.4.18;
+pragma solidity ^0.4.18;
 
 import "./NationStorage.sol";
 import "../common/Initializable.sol";
 
+/**
+ * @title Nation
+ * @dev Base Nation contract that acts as a nation registry for BitNation
+ * Upgrade by calling nationImplementation.upgradeNation(upgradedImplementation.address)
+ */
 contract Nation is NationStorage, Initializable {
 
     struct NationCore {
@@ -37,52 +42,67 @@ contract Nation is NationStorage, Initializable {
 
     }
 
-    mapping (string => NationCore) nationCoreMapping;
-    mapping (string => NationPolicy) nationPolicyMapping;
-    mapping (string => NationGovernance) nationGovernanceMapping;
+    // @dev mappings for nation id => nation properties
+    mapping (uint => NationCore) nationCoreMapping;
+    mapping (uint => NationPolicy) nationPolicyMapping;
+    mapping (uint => NationGovernance) nationGovernanceMapping;
     mapping (uint => string) nationIds;
 
+    // @dev keep track of the contract properties
     uint public NationCoreVersion;
     uint public numNations;
     address public owner;
 
-    event UpgradeNation(address indexed newNation);
 
+    // EVENTS
+
+    // logged events:
+    // The nations contract has been upgraded (!IMPORTANT)
+    event UpgradeNation(address indexed newNation);
+    // Events for when a nation's properties have been altered/created
     event NationCoreCreated(address indexed founder, string nationName, uint indexed nationId);
     event NationPolicySet(string nationName, uint indexed nationId);
     event NationGovernanceSet(string nationName, uint indexed nationId);
 
-    // For debugging purposes
-    event LogEvent(address sender, address owner);
-
+    // Constructor for the nations contract. Sets the nations version as 1
     function Nation() public {
-        NationCoreVersion = 3;
+        NationCoreVersion = 1;
     }
 
+    /**
+     * @dev Initialize the Nation contract after it has been deployed.
+     * @param _owner address representing the owner that can upgrade this contract.
+     */
     function initialize(address _owner) onlyInit public {
         initialized();
         owner = _owner;
     }
 
-    function getNationId(string _nationName) public constant returns (uint) {
-        return nationCoreMapping[_nationName].nationId;
-    }
-
+    /**
+     * @dev Get a nation's name using the nation id
+     * @param _nationId uint the id of the nation that you want the name of.
+     * @return An string that is the nation name.
+     */
     function getNationName(uint _nationId) public constant returns (string) {
         return nationIds[_nationId];
     }
 
-    function getNationCore(string _nationName) public constant returns (
-        uint _nationId,
+    /**
+     * @dev Get a nation's core properties using the nation id
+     * @param _nationId uint the id of the nation that you want the properties of.
+     * @return A NationCore that corresponds to the nation id.
+     */
+    function getNationCore(uint _nationId) public constant returns (
+        string _nationName,
         string _nationDescription,
         bool _exists,
         bool _virtualNation,
         address _founder
     ){
 
-        NationCore memory nationCore = nationCoreMapping[_nationName];
+        NationCore memory nationCore = nationCoreMapping[_nationId];
 
-        _nationId = nationCore.nationId;
+        _nationName = nationCore.nationName;
         _nationDescription = nationCore.nationDescription;
         _exists = nationCore.exists;
         _virtualNation = nationCore.virtualNation;
@@ -90,7 +110,12 @@ contract Nation is NationStorage, Initializable {
 
     }
 
-    function getNationPolicy(string _nationName) public constant returns (
+    /**
+     * @dev Get a nation's policies using the nation id
+     * @param _nationId uint the id of the nation that you want the policies of.
+     * @return A NationPolicy that corresponds to the nation id.
+     */
+    function getNationPolicy(uint _nationId) public constant returns (
         string _nationCode,
         string _nationCodeLink,
         string _lawEnforcementMechanism,
@@ -99,7 +124,7 @@ contract Nation is NationStorage, Initializable {
         bool _profit
     ) {
 
-        NationPolicy memory nationPolicy = nationPolicyMapping[_nationName];
+        NationPolicy memory nationPolicy = nationPolicyMapping[_nationId];
 
         _nationCode = nationPolicy.nationCode;
         _nationCodeLink = nationPolicy.nationCodeLink;
@@ -110,14 +135,19 @@ contract Nation is NationStorage, Initializable {
 
     }
 
-    function getNationGovernance(string _nationName) public constant returns (
+    /**
+     * @dev Get a nation's governance model using the nation id
+     * @param _nationId uint the id of the nation that you want the governance model of.
+     * @return A NationGovernance that corresponds to the nation id.
+     */
+    function getNationGovernance(uint _nationId) public constant returns (
         string _decisionMakingProcess,
         bool _diplomaticRecognition,
         string _governanceService,
         bool _nonCitizenUse
     ) {
 
-        NationGovernance memory nationGovernance = nationGovernanceMapping[_nationName];
+        NationGovernance memory nationGovernance = nationGovernanceMapping[_nationId];
 
         _decisionMakingProcess = nationGovernance.decisionMakingProcess;
         _diplomaticRecognition = nationGovernance.diplomaticRecognition;
@@ -125,14 +155,21 @@ contract Nation is NationStorage, Initializable {
         _nonCitizenUse = nationGovernance.nonCitizenUse;
     }
 
+    /**
+     * @dev Create a nation by providing the core properties of that nation.
+     * Additional properties (policies, governance) can be set at a later time.
+     * @param _nationName string the name of the nation.
+     * @param _nationDescription string the description of the nation.
+     * @param _exists bool whether the nation is a real one or not.
+     * @param _virtualNation bool if the nation is a virtual one.
+     */
     function createNationCore(string _nationName, string _nationDescription, bool _exists, bool _virtualNation) external {
 
         require(bytes(_nationName).length > 0);
-        require(nationCoreMapping[_nationName].nationId == 0);
 
         numNations++;
 
-        nationCoreMapping[_nationName] = NationCore({
+        nationCoreMapping[numNations] = NationCore({
             nationId: numNations,
             nationName: _nationName,
             nationDescription: _nationDescription,
@@ -147,8 +184,12 @@ contract Nation is NationStorage, Initializable {
 
     }
 
+    /**
+     * @dev Set a nation's policies. Can only be set by the original founder of the nation.
+     * @param _nationId uint the id of the nation.
+     */
     function SetNationPolicy (
-        string _nationName,
+        uint _nationId,
         string _nationCode,
         string _nationCodeLink,
         string _lawEnforcementMechanism,
@@ -157,11 +198,11 @@ contract Nation is NationStorage, Initializable {
         bool _profit
     ) public {
 
-        require(bytes(_nationName).length > 0);
-        require(nationCoreMapping[_nationName].nationId > 0);
-        require(nationCoreMapping[_nationName].founder == msg.sender);
+        require(_nationId > 0);
+        require(nationCoreMapping[_nationId].nationId > 0);
+        require(nationCoreMapping[_nationId].founder == msg.sender);
 
-        nationPolicyMapping[_nationName] = NationPolicy({
+        nationPolicyMapping[_nationId] = NationPolicy({
             nationCode: _nationCode,
             nationCodeLink: _nationCodeLink,
             lawEnforcementMechanism: _lawEnforcementMechanism,
@@ -169,29 +210,33 @@ contract Nation is NationStorage, Initializable {
             constitutionLink: _constitutionLink,profit: _profit
         });
 
-        NationPolicySet(_nationName, nationCoreMapping[_nationName].nationId);
+        NationPolicySet(nationIds[_nationId], _nationId);
 
     }
 
+    /**
+     * @dev Set a nation's governance model. Can only be set by the original founder of the nation.
+     * @param _nationId uint the id of the nation.
+     */
     function SetNationGovernance (
-        string _nationName,
+        uint _nationId,
         string _decisionMakingProcess,
         bool _diplomaticRecognition,
         string _governanceService,
         bool _nonCitizenUse
     ) public {
-        require(bytes(_nationName).length > 0);
-        require(nationCoreMapping[_nationName].nationId > 0);
-        require(nationCoreMapping[_nationName].founder == msg.sender);
+        require(_nationId > 0);
+        require(nationCoreMapping[_nationId].nationId > 0);
+        require(nationCoreMapping[_nationId].founder == msg.sender);
 
-        nationGovernanceMapping[_nationName] = NationGovernance({
+        nationGovernanceMapping[_nationId] = NationGovernance({
             decisionMakingProcess: _decisionMakingProcess,
             diplomaticRecognition: _diplomaticRecognition,
             governanceService: _governanceService,
             nonCitizenUse: _nonCitizenUse
         });
 
-        NationGovernanceSet(_nationName, nationCoreMapping[_nationName].nationId);
+        NationGovernanceSet(nationIds[_nationId], _nationId);
     }
 
     /**
