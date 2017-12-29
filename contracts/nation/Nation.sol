@@ -42,6 +42,11 @@ contract Nation is NationStorage, Initializable {
 
     }
 
+    // Mapping for nationId => mapping of address to true if citizen exists
+    mapping (uint => mapping (address => bool)) citizensMapping;
+    // Mapping for nationId => numCitizens
+    mapping (uint => uint) numCitizensMapping;
+
     // @dev mappings for nation id => nation properties
     mapping (uint => NationCore) nationCoreMapping;
     mapping (uint => NationPolicy) nationPolicyMapping;
@@ -63,6 +68,9 @@ contract Nation is NationStorage, Initializable {
     event NationCoreCreated(address indexed founder, string nationName, uint indexed nationId);
     event NationPolicySet(string nationName, uint indexed nationId);
     event NationGovernanceSet(string nationName, uint indexed nationId);
+    // Events for citizens
+    event CitizenJoined(uint indexed nationId, address citizenAddress);
+    event CitizenLeft(uint indexed nationId, address citizenAddress);
 
     // Constructor for the nations contract. Sets the nations version as 1
     function Nation() public {
@@ -248,6 +256,61 @@ contract Nation is NationStorage, Initializable {
         require(msg.sender == owner);
         nationImpl = _newNation;
         UpgradeNation(_newNation);
+    }
+
+    /**
+    * @dev Adds a user to a nation's citizen registry
+    * @param _nationId id of the nation that the citizen wants to join
+    */
+    function joinNation(uint _nationId) public {
+        // Make sure the nation exists first
+        require(_nationId > 0);
+        require(nationCoreMapping[_nationId].nationId > 0);
+        // Make sure the user is not already part of the nation
+        require(citizensMapping[_nationId][msg.sender] == false);
+        // overflow check
+        require(numCitizensMapping[_nationId] + 1 > numCitizensMapping[_nationId]);
+
+        citizensMapping[_nationId][msg.sender] = true;
+        numCitizensMapping[_nationId]++;
+
+        CitizenJoined(_nationId, msg.sender);
+    }
+
+    /**
+    * @dev Removes a user from a nation's citizen registry
+    * @param _nationId id of the nation that the citizen wants to leave
+    */
+    function leaveNation(uint _nationId) public {
+        // Make sure the nation exists first
+        require(_nationId > 0);
+        require(nationCoreMapping[_nationId].nationId > 0);
+        // Must be already in the nation
+        require(citizensMapping[_nationId][msg.sender] == true);
+        // overflow check
+        require(numCitizensMapping[_nationId] - 1 < numCitizensMapping[_nationId]);
+
+        citizensMapping[_nationId][msg.sender] = false;
+        numCitizensMapping[_nationId]--;
+
+        CitizenLeft(_nationId, msg.sender);
+    }
+
+    /**
+    * @dev Checks to see if an address is a member of a nation
+    * @param _citizenAddress address of the citizen you want to check
+    * @param _nationId id of the nation that is being checked
+    */
+    function checkCitizen(address _citizenAddress, uint _nationId) public constant returns (bool) {
+        return citizensMapping[_nationId][_citizenAddress];
+    }
+
+    /**
+    * @dev Checks the number of citizens in a nation
+    * @param _nationId id of the nation that is being checked
+    */
+    function getNumCitizens(uint _nationId) public constant returns (uint) {
+        return numCitizensMapping[_nationId];
     }
 
 }
