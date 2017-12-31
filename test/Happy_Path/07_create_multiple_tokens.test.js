@@ -10,7 +10,7 @@ contract('Token creation testing', accounts => {
 	let tokenAddress1;
 	let tokenAddress2;
 
-	it('Should be able initialize the registry and create a custom token', function() {
+	it('Should be able initialize the registry and create multiple tokens', function() {
 		return TokenRegistry.deployed().then(function(instance) {
 			registryInstance = instance;
 			return registryInstance.createStandardToken(nationId, 1000, "Test Nation Coin", 4, "TNC", {from: accounts[1]});

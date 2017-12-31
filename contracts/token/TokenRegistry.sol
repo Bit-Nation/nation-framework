@@ -10,6 +10,8 @@ contract TokenRegistry {
 
     function createStandardToken(uint _nationId, uint256 _initialAmount, string _name, uint8 _decimals, string _symbol) public returns (address) {
 
+        require(_nationId > 0 && _initialAmount > 0 && bytes(_name).length > 0 && bytes(_symbol).length > 0);
+
         NationStandardToken newToken = (new NationStandardToken(_nationId, _initialAmount, _name, _decimals, _symbol));
         tokens[_nationId].push(address(newToken));
         newToken.transfer(msg.sender, _initialAmount); //the factory will own the created tokens. You must transfer them.
