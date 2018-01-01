@@ -1,7 +1,9 @@
 let Nation = artifacts.require('./Nation.sol');
 let NationProxy = artifacts.require('./NationProxy.sol');
 
-contract('Nation Policy Exception Testing', accounts => {
+// Test to see if you can join and leave a nation
+
+contract('Nation Core Creation Testing', accounts => {
 
 	let nationInstance;
 
@@ -10,27 +12,33 @@ contract('Nation Policy Exception Testing', accounts => {
 		let nationProxy = await NationProxy.new(nationImpl.address, {from: accounts[0]});
 		nationInstance = Nation.at(nationProxy.address, {from: accounts[0]});
 		nationInstance.initialize(accounts[0]);
-		nationInstance.createNationCore("USA", "United states of America", true, false)
+		await nationInstance.createNationCore("USA", "United states of America", true, false);
 	});
 
-	it("Should be able to fail to set a non-existing nation's policies", function() {
-		return nationInstance.SetNationGovernance("USAD", 'Democracy', true, 'Legal Services', false)
+	it("Should not be able to join a nation that hasn't been created", function() {
+		return nationInstance.joinNation(2, {from: accounts[8]})
 			.then(assert.fail)
 			.catch(function(error) {
 				assert(error.message.indexOf('revert') >= 0, "error should be revert");
 			})
 	});
 
-	it("Should be able to fail to set a nation's governance because there is no nation name", function() {
-		return nationInstance.SetNationGovernance("", 'Democracy', true, 'Legal Services', false)
+	it("Should not be able to join a nation twice", function() {
+		return nationInstance.joinNation(1, {from: accounts[8]})
+			.then(function(txReceipt) {
+				return nationInstance.joinNation(1, {from:accounts[8]})
+			})
 			.then(assert.fail)
 			.catch(function(error) {
 				assert(error.message.indexOf('revert') >= 0, "error should be revert");
 			})
 	});
 
-	it("Should be able to fail to set a nation's policies because not founder", function() {
-		return nationInstance.SetNationGovernance("USA", 'Democracy', true, 'Legal Services', false, {from: accounts[1]})
+	it("Should not be able to leave a nation twice", function() {
+		return nationInstance.leaveNation(1, {from: accounts[8]})
+			.then(function(txReceipt) {
+				return nationInstance.leaveNation(1, {from:accounts[8]})
+			})
 			.then(assert.fail)
 			.catch(function(error) {
 				assert(error.message.indexOf('revert') >= 0, "error should be revert");

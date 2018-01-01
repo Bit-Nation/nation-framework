@@ -11,10 +11,10 @@
         "truffle": "^4.0.4"
     },
     "devDependencies": {
-        "solidity-coverage": "^0.4.4"
+        "solidity-coverage": "^0.4.6"
     },
     "scripts": {
-        "test": "truffle test",
+        "test": "truffle test --network testing",
         "coverage": "./node_modules/.bin/solidity-coverage"
     },
     "repository": {

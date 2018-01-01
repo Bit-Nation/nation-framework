@@ -5,7 +5,7 @@ contract('Token creation testing', accounts => {
 
 	let registryInstance = {};
 	let nationToken = {};
-	let nationName = "TestNation";
+	let nationId = 1;
 	let tokenAddress;
 
 	let account0initialBalance;
@@ -15,7 +15,7 @@ contract('Token creation testing', accounts => {
 	before(() => {
 		return TokenRegistry.deployed().then(function(instance) {
 			registryInstance = instance;
-			return registryInstance.createStandardToken(nationName, 1000, "Test Nation Coin", 4, "TNC", {from: accounts[0]});
+			return registryInstance.createStandardToken(nationId, 1000, "Test Nation Coin", 4, "TNC", {from: accounts[0]});
 		}).then(function(txReceipt) {
 			assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 			assert.equal(txReceipt.logs[0].event, "TokenCreated", "The second event should have been TokenCreated");

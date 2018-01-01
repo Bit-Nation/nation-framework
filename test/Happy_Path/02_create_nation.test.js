@@ -13,7 +13,7 @@ contract('Nation Core Creation Testing', accounts => {
 			assert.equal(number, 0, "Should have initialized with zero nations");
 			return nationInstance.NationCoreVersion();
 		}).then(function(version) {
-			assert.equal(version, 3, "Should have initialized to version 3 ");
+			assert.equal(version, 1, "Should have initialized to version 1");
 		})
 	});
 
@@ -25,13 +25,18 @@ contract('Nation Core Creation Testing', accounts => {
 		}).then(function(txReceipt) {
 			assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 			assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
-			return nationInstance.getNationCore('USA');
+			return nationInstance.getNationCore(1);
 		}).then(function(nation) {
-			assert.equal(nation[0].toNumber(), 1, "Nation Id should be 1");
+			assert.equal(nation[0], "USA", "Nation name should be USA");
 			assert.equal(nation[1], "United States of America", "Nation description should have been United States of America");
 			assert.equal(nation[2], true, "The nation should be exists = true");
 			assert.equal(nation[3], false, "The nation should not be a virtual nation");
 			assert.equal(nation[4], accounts[0], "The nation founder should be the coinbase account");
+
+			// Test that we are getting the right nation name from the registry
+			return nationInstance.getNationName(1);
+		}).then(function(nationName) {
+			assert.equal(nationName, "USA", "Nation name should be USA");
 		})
 	});
 

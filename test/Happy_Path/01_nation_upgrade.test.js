@@ -23,9 +23,9 @@ contract('Nation Upgrade Testing', accounts => {
 			.then(function(txReceipt) {
 				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 				assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
-				return nation.getNationCore('USA');
+				return nation.getNationCore(1);
 			}).then(function(nation) {
-				assert.equal(nation[0].toNumber(), 1, "Nation Id should be 1");
+				assert.equal(nation[0], "USA", "Nation Name should be USA");
 				assert.equal(nation[1], "United States of America", "Nation description should have been United States of America");
 				assert.equal(nation[2], true, "The nation should be exists = true");
 				assert.equal(nation[3], false, "The nation should not be a virtual nation");
@@ -46,14 +46,22 @@ contract('Nation Upgrade Testing', accounts => {
 	});
 
 	it('Should be able to get the same nation data out of the upgraded contract', function() {
-		return nation.getNationCore('USA')
+		return nation.getNationCore(1)
 			.then(function(nation) {
-				assert.equal(nation[0].toNumber(), 1, "Nation Id should be 1");
+				assert.equal(nation[0], "USA", "Nation Name should be USA");
 				assert.equal(nation[1], "United States of America", "Nation description should have been United States of America");
 				assert.equal(nation[2], true, "The nation should be exists = true");
 				assert.equal(nation[3], false, "The nation should not be a virtual nation");
 				assert.equal(nation[4], accounts[0], "The nation founder should be the coinbase account");
 			})
+	});
+
+	it('Should be able to get the initialziation block from the nations contract', function() {
+		return nation.getInitializationBlock()
+			.then(function(blockNumber) {
+				// Just doing this for coverage, not really necessary
+				console.log('Initialization Block Number: ', blockNumber);
+			})
 	})
 
-})
+});

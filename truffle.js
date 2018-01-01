@@ -3,14 +3,14 @@ module.exports = {
 	// to customize your Truffle configuration!
 	networks: {
 		development: {
-			host: 'testrpc',
+			host: 'localhost',
 			port: 8545,
 			network_id: '*'
 		},
-        coverage: {
-            host: 'testrpc',
-            network_id: '*',
-            port: 8545
-        }
+		testing: {
+			host: 'testrpc',
+			port: 8545,
+			network_id: '*'
+		}
 	}
 };

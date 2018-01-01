@@ -14,7 +14,7 @@ contract('Nation Policy Exception Testing', accounts => {
 	});
 
 	it("Should be able to fail to set a non-existing nation's policies", function() {
-		return nationInstance.SetNationPolicy(2, "nation code", "nationcodelink", "lawEM", true, "constitution link", true, {from: accounts[1]})
+		return nationInstance.SetNationGovernance(2, 'Democracy', true, 'Legal Services', false)
 			.then(assert.fail)
 			.catch(function(error) {
 				assert(error.message.indexOf('revert') >= 0, "error should be revert");
@@ -22,7 +22,7 @@ contract('Nation Policy Exception Testing', accounts => {
 	});
 
 	it("Should be able to fail to set a nation's policies because not founder", function() {
-		return nationInstance.SetNationPolicy(1, "nation code", "nationcodelink", "lawEM", true, "constitution link", true, {from: accounts[1]})
+		return nationInstance.SetNationGovernance(1, 'Democracy', true, 'Legal Services', false, {from: accounts[1]})
 			.then(assert.fail)
 			.catch(function(error) {
 				assert(error.message.indexOf('revert') >= 0, "error should be revert");

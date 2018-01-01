@@ -5,13 +5,13 @@ contract('Token creation testing', accounts => {
 
 	let registryInstance = {};
 	let nationToken = {};
-	let nationName = "TestNation";
+	let nationId = 1;
 	let tokenAddress;
 
 	it('Should be able initialize the registry and create a custom token', function() {
 		return TokenRegistry.deployed().then(function(instance) {
 			registryInstance = instance;
-			return registryInstance.createStandardToken(nationName, 1000, "Test Nation Coin", 4, "TNC", {from: accounts[1]});
+			return registryInstance.createStandardToken(nationId, 1000, "Test Nation Coin", 4, "TNC", {from: accounts[1]});
 		}).then(function(txReceipt) {
 			assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 			assert.equal(txReceipt.logs[0].event, "TokenCreated", "The second event should have been TokenCreated");
@@ -22,9 +22,9 @@ contract('Token creation testing', accounts => {
 		}).then(function(tokenName) {
 			assert.equal(tokenName, "Test Nation Coin", "The token name should have been Test Nation Coin");
 
-			return nationToken.nationName();
-		}).then(function(tokenNationName) {
-			assert.equal(tokenNationName, nationName, "The token nation should have been " + nationName);
+			return nationToken.nationId();
+		}).then(function(tokenNationId) {
+			assert.equal(tokenNationId, nationId, "The token nation should have been " + nationId);
 
 			return nationToken.decimals();
 		}).then(function(tokenDecimals) {
@@ -41,7 +41,7 @@ contract('Token creation testing', accounts => {
 	});
 
 	it("Should be able to fetch a nation's tokens", function() {
-		return registryInstance.getTokensForNation(nationName)
+		return registryInstance.getTokensForNation(nationId)
 			.then(function(tokens) {
 				assert.equal(tokens.length, 1, "There should have been one token created");
 				assert.equal(tokens[0], tokenAddress, "The token address should have been " + tokenAddress);

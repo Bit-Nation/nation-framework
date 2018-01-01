@@ -12,6 +12,10 @@
 7. Run `docker-compose down` to destroy the container's.
 8. Run `docker-compose build` to rebuild the images (you need this when you change thing's in the Dockerfile's)
 
+### Testing
+1. To run the tests, use `npm run test` inside the docker node env
+2. To run coverage, use `npm run coverage` inside the docker node env
+
 ### Git 
 - We are using [this](http://nvie.com/posts/a-successful-git-branching-model/) git workflow. Make sure you read it. 
 - PLEASE prefix your git commit's with a topic like so: `[git] blacklisted .idea folder`
