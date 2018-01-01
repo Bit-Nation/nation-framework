@@ -64,6 +64,8 @@ contract Nation is NationStorage, Initializable {
     // logged events:
     // The nations contract has been upgraded (!IMPORTANT)
     event UpgradeNation(address indexed newNation);
+    // Event for changing the owner of this contract
+    event OwnerChanged(address indexed newOwner);
     // Events for when a nation's properties have been altered/created
     event NationCoreCreated(address indexed founder, string nationName, uint indexed nationId);
     event NationPolicySet(string nationName, uint indexed nationId);
@@ -84,6 +86,16 @@ contract Nation is NationStorage, Initializable {
     function initialize(address _owner) onlyInit public {
         initialized();
         owner = _owner;
+    }
+
+    /**
+    * @dev Changes the owner of this contract
+    * @param _newOwner Address for new owner
+    */
+    function changeOwner(address _newOwner) external {
+        require(msg.sender == owner);
+        owner = _newOwner;
+        OwnerChanged(_newOwner);
     }
 
     /**
