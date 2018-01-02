@@ -12,11 +12,14 @@ After you get the implementation, you can interact with it in the following ways
 
 #### Upgrading the nations contract
 To upgrade the nations contract, make sure you are the current owner of the contract. You can check with a simple
-`nationInstance.owner()`, since owner is a public state variable. You can also check the current version with
-`nationInstance.NationCoreVersion()`.
+`nationInstance.owner()`, since owner is a public state variable. You can change the owner of the contract with 
+`nationInstance.changeOwner(address newOwner)` which will fire off a `OwnerChanged(address indexed newOwner)` event.
+Note that this function can only be called from the current owner.
+
+You can also check the current version with `nationInstance.NationCoreVersion()`.
 
 To upgrade the nation, run `nationInstance.upgradeNation(address newNationContract)` with the address of the deployed
-new nation contract.  
+new nation contract. This will fire off a `UpgradeNation(address indexed newNation)` event
 
 #### Creating and setting a nation's properties
 
@@ -72,7 +75,9 @@ You can also use assistant functions to get other data from nations:
 #### Citizen management
 Citizens can join or leave a nation with the following commands:
 `nationInstance.joinNation(uint nationId)` and
-`nationInstance.leaveNation(uint nationId)`
+`nationInstance.leaveNation(uint nationId)` which will fire off
+`CitizenJoined(uint indexed nationId, address citizenAddress)` and `CitizenLeft(uint indexed nationId, address citizenAddress)` events respectively.
+
 
 You can check if a citizen is a member of a nation with the constant function:
 `nationInstance.checkCitizen(address citizenAddress, uint nationId)`
