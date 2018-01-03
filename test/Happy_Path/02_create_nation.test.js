@@ -17,8 +17,9 @@ contract('Nation Core Creation Testing', accounts => {
 		})
 	});
 
+	let nationInstance;
+
 	it('Should be able to create a nation core and receive the create nation event', function() {
-		let nationInstance;
 		return Nation.deployed().then(function(instance) {
 			nationInstance = instance;
 			return nationInstance.createNationCore("USA", "United States of America", true, false);
@@ -39,5 +40,22 @@ contract('Nation Core Creation Testing', accounts => {
 			assert.equal(nationName, "USA", "Nation name should be USA");
 		})
 	});
+
+	it('Should be able to get a list of the nations account[0] has founded', function() {
+		return nationInstance.getFoundedNations(accounts[0])
+			.then(function(nations) {
+				assert.equal(nations.length, 1, "There should be one nation belonging to account[0]");
+				assert.equal(nations[0], 1, "The id of the first nation should be 1");
+				return nationInstance.createNationCore("Canada", "Canada Nation", true, false);
+			}).then(function(txReceipt) {
+				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
+				assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
+				return nationInstance.getFoundedNations(accounts[0]);
+			}).then(function(nations) {
+				assert.equal(nations.length, 2, "There should be two nations belonging to account[0]");
+				assert.equal(nations[0], 1, "The id of the first nation should be 1");
+				assert.equal(nations[1], 2, "The id of the second nation should be 2");
+			})
+	})
 
 });

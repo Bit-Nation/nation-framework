@@ -52,6 +52,7 @@ contract Nation is NationStorage, Initializable {
     mapping (uint => NationPolicy) nationPolicyMapping;
     mapping (uint => NationGovernance) nationGovernanceMapping;
     mapping (uint => string) nationIds;
+    mapping (address => uint[]) foundedNations;
 
     // @dev keep track of the contract properties
     uint public NationCoreVersion;
@@ -200,6 +201,8 @@ contract Nation is NationStorage, Initializable {
 
         nationIds[numNations] = _nationName;
 
+        foundedNations[msg.sender].push(numNations);
+
         NationCoreCreated(msg.sender, _nationName, numNations);
 
     }
@@ -323,6 +326,14 @@ contract Nation is NationStorage, Initializable {
     */
     function getNumCitizens(uint _nationId) public constant returns (uint) {
         return numCitizensMapping[_nationId];
+    }
+
+    /**
+    * @dev Gets an array of the nation ids that a founder has created
+    * @param _founder address of the founder that is being searched
+    */
+    function getFoundedNations(address _founder) public constant returns (uint[]) {
+        return foundedNations[_founder];
     }
 
 }

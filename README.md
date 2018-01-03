@@ -71,6 +71,7 @@ You can get the core features, policies, or governance model of any nation with 
 You can also use assistant functions to get other data from nations:
 `nationInstance.getNationName(uint nationId)`, which returns a string of the nation name or
 `nationInstance.numNations()`, which returns the current number of nations that exist.
+`nationInstance.getFoundedNations(address founder)`, which returns an array of nation ids that the founder has created.
 
 #### Citizen management
 Citizens can join or leave a nation with the following commands:
