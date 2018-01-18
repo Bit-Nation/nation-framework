@@ -27,8 +27,6 @@ contract Nation is NationStorage, Initializable {
         string nationCode;
         string nationCodeLink;
         string lawEnforcementMechanism;
-        bool hasConstitution;
-        string constitutionLink;
         bool profit;
 
     }
@@ -140,8 +138,6 @@ contract Nation is NationStorage, Initializable {
         string _nationCode,
         string _nationCodeLink,
         string _lawEnforcementMechanism,
-        bool _hasConstitution,
-        string _constitutionLink,
         bool _profit
     ) {
 
@@ -150,8 +146,6 @@ contract Nation is NationStorage, Initializable {
         _nationCode = nationPolicy.nationCode;
         _nationCodeLink = nationPolicy.nationCodeLink;
         _lawEnforcementMechanism = nationPolicy.lawEnforcementMechanism;
-        _hasConstitution = nationPolicy.hasConstitution;
-        _constitutionLink = nationPolicy.constitutionLink;
         _profit = nationPolicy.profit;
 
     }
@@ -216,8 +210,6 @@ contract Nation is NationStorage, Initializable {
         string _nationCode,
         string _nationCodeLink,
         string _lawEnforcementMechanism,
-        bool _hasConstitution,
-        string _constitutionLink,
         bool _profit
     ) public {
 
@@ -229,8 +221,7 @@ contract Nation is NationStorage, Initializable {
             nationCode: _nationCode,
             nationCodeLink: _nationCodeLink,
             lawEnforcementMechanism: _lawEnforcementMechanism,
-            hasConstitution: _hasConstitution,
-            constitutionLink: _constitutionLink,profit: _profit
+            profit: _profit
         });
 
         NationPolicySet(nationIds[_nationId], _nationId);
