@@ -17,7 +17,7 @@ contract('Nation Policy Testing', accounts => {
 	it("Should be able to set a nation's policies", function() {
 		return nationInstance.createNationCore("USA", "United states of America", true, false)
 			.then(function(txReceipt) {
-				return nationInstance.SetNationPolicy(1, "nation code", "nationcodelink", "lawEM", true, "constitution link", true)
+				return nationInstance.SetNationPolicy(1, "nation code", "nationcodelink", "lawEM", true)
 			}).then(function (txReceipt) {
 				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 				assert.equal(txReceipt.logs[0].event, "NationPolicySet", "event emitted should have been NationPolicySet");
