@@ -24,6 +24,7 @@ contract Nation is NationStorage, Initializable {
 
     struct NationPolicy {
 
+        uint nationId;
         string nationCode;
         string nationCodeLink;
         string lawEnforcementMechanism;
@@ -33,6 +34,7 @@ contract Nation is NationStorage, Initializable {
 
     struct NationGovernance {
 
+        uint nationId;
         bool nonCitizenUse;
         bool diplomaticRecognition;
         string decisionMakingProcess;
@@ -216,8 +218,11 @@ contract Nation is NationStorage, Initializable {
         require(_nationId > 0);
         require(nationCoreMapping[_nationId].nationId > 0);
         require(nationCoreMapping[_nationId].founder == msg.sender);
+        // ensures that the policy can only be set once
+        require(nationPolicyMapping[_nationId].nationId == 0);
 
         nationPolicyMapping[_nationId] = NationPolicy({
+            nationId: _nationId,
             nationCode: _nationCode,
             nationCodeLink: _nationCodeLink,
             lawEnforcementMechanism: _lawEnforcementMechanism,
@@ -242,8 +247,11 @@ contract Nation is NationStorage, Initializable {
         require(_nationId > 0);
         require(nationCoreMapping[_nationId].nationId > 0);
         require(nationCoreMapping[_nationId].founder == msg.sender);
+        // Ensures that the governance can only be set once
+        require(nationGovernanceMapping[_nationId].nationId == 0);
 
         nationGovernanceMapping[_nationId] = NationGovernance({
+            nationId: _nationId,
             decisionMakingProcess: _decisionMakingProcess,
             diplomaticRecognition: _diplomaticRecognition,
             governanceService: _governanceService,

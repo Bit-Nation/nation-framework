@@ -29,4 +29,15 @@ contract('Nation Policy Exception Testing', accounts => {
 			})
 	});
 
+	it('Should fail to set a nations governance twice', function() {
+		return nationInstance.SetNationGovernance(1, 'Democracy', true, 'Legal Services', false)
+			.then(function(txReceipt) {
+				return nationInstance.SetNationGovernance(1, 'Democracy', true, 'Legal Services', false);
+			})
+			.then(assert.fail)
+			.catch(function(error) {
+				assert(error.message.indexOf('revert') >= 0, "error should be revert");
+			})
+	})
+
 });
