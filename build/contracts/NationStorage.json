@@ -16,18 +16,18 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6060604052341561000f57600080fd5b60e78061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058208209691e9b9a3e036c00c1e36b1862688321e761d554db22d05da8bd1b2725c00029",
-  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058208209691e9b9a3e036c00c1e36b1862688321e761d554db22d05da8bd1b2725c00029",
+  "bytecode": "0x6060604052341561000f57600080fd5b60e78061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820e09200898f999fd367e926153f4ea4dbec1547acd3cb1504b03beaf71339c2fa0029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820e09200898f999fd367e926153f4ea4dbec1547acd3cb1504b03beaf71339c2fa0029",
   "sourceMap": "124:57:5:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "124:57:5:-;;;;;;;;;;;;;;;;;;;;;;;;153:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "pragma solidity ^0.4.18;\n\n/**\n * @title NationStorage\n * @dev Contains the address of the current nation implementation\n */\ncontract NationStorage {\n    address public nationImpl;\n}\n",
-  "sourcePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/nation/NationStorage.sol",
+  "sourcePath": "/Users/florian/project/nation-framework/contracts/nation/NationStorage.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/nation/NationStorage.sol",
+      "absolutePath": "/Users/florian/project/nation-framework/contracts/nation/NationStorage.sol",
       "exportedSymbols": {
         "NationStorage": [
-          545
+          503
         ]
       }
     },
@@ -41,7 +41,7 @@
             ".18"
           ]
         },
-        "id": 542,
+        "id": 500,
         "name": "PragmaDirective",
         "src": "0:24:5"
       },
@@ -57,17 +57,17 @@
           "documentation": "@title NationStorage\n@dev Contains the address of the current nation implementation",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            545
+            503
           ],
           "name": "NationStorage",
-          "scope": 546
+          "scope": 504
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "nationImpl",
-              "scope": 545,
+              "scope": 503,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -80,22 +80,22 @@
                   "name": "address",
                   "type": "address"
                 },
-                "id": 543,
+                "id": 501,
                 "name": "ElementaryTypeName",
                 "src": "153:7:5"
               }
             ],
-            "id": 544,
+            "id": 502,
             "name": "VariableDeclaration",
             "src": "153:25:5"
           }
         ],
-        "id": 545,
+        "id": 503,
         "name": "ContractDefinition",
         "src": "124:57:5"
       }
     ],
-    "id": 546,
+    "id": 504,
     "name": "SourceUnit",
     "src": "0:182:5"
   },
@@ -105,5 +105,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-21T17:10:54.968Z"
+  "updatedAt": "2018-01-21T20:17:10.148Z"
 }
