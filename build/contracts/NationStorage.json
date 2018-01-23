@@ -18,8 +18,8 @@
   ],
   "bytecode": "0x6060604052341561000f57600080fd5b60e78061001d6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820e09200898f999fd367e926153f4ea4dbec1547acd3cb1504b03beaf71339c2fa0029",
   "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063bfb93db2146044575b600080fd5b3415604e57600080fd5b60546096565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820e09200898f999fd367e926153f4ea4dbec1547acd3cb1504b03beaf71339c2fa0029",
-  "sourceMap": "124:57:2:-;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "124:57:2:-;;;;;;;;;;;;;;;;;;;;;;;;153:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "sourceMap": "124:57:5:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "124:57:5:-;;;;;;;;;;;;;;;;;;;;;;;;153:25;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
   "source": "pragma solidity ^0.4.18;\n\n/**\n * @title NationStorage\n * @dev Contains the address of the current nation implementation\n */\ncontract NationStorage {\n    address public nationImpl;\n}\n",
   "sourcePath": "/Users/florian/project/nation-framework/contracts/nation/NationStorage.sol",
   "ast": {
@@ -27,7 +27,7 @@
       "absolutePath": "/Users/florian/project/nation-framework/contracts/nation/NationStorage.sol",
       "exportedSymbols": {
         "NationStorage": [
-          428
+          548
         ]
       }
     },
@@ -41,9 +41,9 @@
             ".18"
           ]
         },
-        "id": 425,
+        "id": 545,
         "name": "PragmaDirective",
-        "src": "0:24:2"
+        "src": "0:24:5"
       },
       {
         "attributes": {
@@ -57,17 +57,17 @@
           "documentation": "@title NationStorage\n@dev Contains the address of the current nation implementation",
           "fullyImplemented": true,
           "linearizedBaseContracts": [
-            428
+            548
           ],
           "name": "NationStorage",
-          "scope": 429
+          "scope": 549
         },
         "children": [
           {
             "attributes": {
               "constant": false,
               "name": "nationImpl",
-              "scope": 428,
+              "scope": 548,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "address",
@@ -80,24 +80,24 @@
                   "name": "address",
                   "type": "address"
                 },
-                "id": 426,
+                "id": 546,
                 "name": "ElementaryTypeName",
-                "src": "153:7:2"
+                "src": "153:7:5"
               }
             ],
-            "id": 427,
+            "id": 547,
             "name": "VariableDeclaration",
-            "src": "153:25:2"
+            "src": "153:25:5"
           }
         ],
-        "id": 428,
+        "id": 548,
         "name": "ContractDefinition",
-        "src": "124:57:2"
+        "src": "124:57:5"
       }
     ],
-    "id": 429,
+    "id": 549,
     "name": "SourceUnit",
-    "src": "0:182:2"
+    "src": "0:182:5"
   },
   "compiler": {
     "name": "solc",
@@ -105,5 +105,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-22T12:30:52.207Z"
+  "updatedAt": "2018-01-23T19:00:41.929Z"
 }
