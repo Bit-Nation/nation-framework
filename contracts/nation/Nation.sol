@@ -18,6 +18,7 @@ contract Nation is NationStorage, Initializable {
     // Mapping for nation and metadata
     mapping (uint => string) nationMetadata;
     mapping (address => uint[]) foundedNations;
+    mapping (address => uint[]) joinedNations;
 
     // @dev keep track of the contract properties
     uint public NationCoreVersion;
@@ -99,6 +100,9 @@ contract Nation is NationStorage, Initializable {
         // overflow check
         require(numCitizensMapping[_nationId] + 1 > numCitizensMapping[_nationId]);
 
+        //Add nation to joined nations of address
+        joinedNations[msg.sender].push(_nationId);
+
         citizensMapping[_nationId][msg.sender] = true;
         numCitizensMapping[_nationId]++;
 
@@ -117,6 +121,9 @@ contract Nation is NationStorage, Initializable {
         require(citizensMapping[_nationId][msg.sender] == true);
         // overflow check
         require(numCitizensMapping[_nationId] - 1 < numCitizensMapping[_nationId]);
+
+        //Remove nation from list of joined nation
+        delete joinedNations[msg.sender][_nationId];
 
         citizensMapping[_nationId][msg.sender] = false;
         numCitizensMapping[_nationId]--;
@@ -142,14 +149,25 @@ contract Nation is NationStorage, Initializable {
     }
 
     /**
-    * @dev Gets an array of the nation ids that a founder has created
+    * @dev Gets an array of the nation ids thaa founder has created
     *  _founder address of the founder that is being searched
     */
     function getFoundedNations(address _founder) public constant returns (uint[]) {
         return foundedNations[_founder];
     }
 
+    /**
+    * @dev Return's the nation metadata
+    */
+    function getNationMetaData(uint _nationId) public constant returns (string) {
+        return nationMetadata[_nationId];
+    }
+
+    /**
+    * @dev Get list of joined nations
+    */
+    function getJoinedNations() public constant returns (uint[]) {
+        return joinedNations[msg.sender];
+    }
+
 }
-
-
-

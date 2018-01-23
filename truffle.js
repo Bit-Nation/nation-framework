@@ -1,3 +1,5 @@
+const HDWalletProvider = require("truffle-private-key-provider");
+
 module.exports = {
 	// See <http://truffleframework.com/docs/advanced/configuration>
 	// to customize your Truffle configuration!
@@ -17,12 +19,12 @@ module.exports = {
 			host: "localhost",
 			port: 8546
 		},
-		rinkeby: {
-			host: "localhost", // Connect to geth on the specified
-			port: 8545,
-			from: "0x9dd5ae6d95d1e7cd88c0b79a4cdbc0d84a800ca7", // default address to use for any transaction Truffle makes during migrations
-			network_id: 4,
-			gas: 4612388 // Gas limit used for deploys
+		"rinkeby": {
+            provider: function () {
+				return new HDWalletProvider('662ee56d16eb0b88404214d1196d9abca3750a06ec184bbc821dbee6cd9996a1', "https://rinkeby.infura.io/metamask")
+            },
+            gasPrice: 22000000000,
+			network_id: 4
 		}
 	}
 };
