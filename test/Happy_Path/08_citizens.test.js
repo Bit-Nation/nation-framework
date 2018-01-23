@@ -12,7 +12,7 @@ contract('Citizens Testing', accounts => {
 		let nationProxy = await NationProxy.new(nationImpl.address, {from: accounts[0]});
 		nationInstance = Nation.at(nationProxy.address, {from: accounts[0]});
 		nationInstance.initialize(accounts[0]);
-		await nationInstance.createNation("CORE HASH/JSON STRINGIFY", "POLICY HASH/JSON STRINGIFY", "GOVERNANCE HASH/JSON STRINGIFY");
+		await nationInstance.createNation("CORE HASH/JSON STRINGIFY");
 	});
 
 	it("Should be able to join the created nation", function() {
