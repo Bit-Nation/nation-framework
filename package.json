@@ -8,10 +8,10 @@
     },
     "dependencies": {
         "coveralls": "^3.0.0",
-        "truffle": "^4.0.4"
+        "truffle": "^4.0.5"
     },
     "devDependencies": {
-        "solidity-coverage": "^0.4.6",
+        "solidity-coverage": "^0.4.9",
         "truffle-private-key-provider": "git+https://github.com/florianlenz/truffle-private-key-provider.git"
     },
     "scripts": {

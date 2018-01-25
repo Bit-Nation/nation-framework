@@ -23,53 +23,16 @@ new nation contract. This will fire off a `UpgradeNation(address indexed newNati
 
 #### Creating and setting a nation's properties
 
-Create a nation by first setting it's core features:
-`nationInstance.createNationCore(string nationName, string nationDescription, bool exists, bool virtualNation)`
-This will fire off a `NationCoreCreated(address indexed founder, string nationName, uint indexed nationId)` event.
+Create a nation by passing in a serialized JSON object of it's properties:
+`nationInstance.createNation('{nationMame: USA...}')`
+This will fire off a `NationCreated(address indexed founder, uint indexed nationId)` event.
 Keep track of the nation Id because that is what you will be using to interface with your nation from now on.
 
-
-You can then set the policies of a nation:
-`nationInstance.SetNationPolicy(uint nationId,
-                                      string nationCode,
-                                      string nationCodeLink,
-                                      string lawEnforcementMechanism,
-                                      bool hasConstitution,
-                                      string constitutionLink,
-                                      bool profit)`
-This will fire off a `NationPolicySet(string nationName, uint indexed nationId)` event.
-
-
-You can additionally set the governance model of a nation like so:
-`nationInstance.SetNationGovernance(uint nationId,
-                                          string decisionMakingProcess,
-                                          bool diplomaticRecognition,
-                                          string governanceService,
-                                          bool nonCitizenUse)`
-This will fire off a `NationGovernanceSet(string nationName, uint indexed nationId)` event.    
-
 #### Getting a nation's properties  
-You can get the core features, policies, or governance model of any nation with the following three constant functions:
-`nationInstance.getNationCore(uint nationId)`, which will return (string _nationName,
-                                                                       string _nationDescription,
-                                                                       bool _exists,
-                                                                       bool _virtualNation,
-                                                                       address _founder)
-                                                                       
-`nationInstance.getNationPolicy(uint nationId)`, which will return (string _nationCode,
-                                                                          string _nationCodeLink,
-                                                                          string _lawEnforcementMechanism,
-                                                                          bool _hasConstitution,
-                                                                          string _constitutionLink,
-                                                                          bool _profit)  
-                                                                          
-`nationInstance.getNationGovernance(uint nationId)`, which will return (string _decisionMakingProcess,
-                                                                              bool _diplomaticRecognition,
-                                                                              string _governanceService,
-                                                                              bool _nonCitizenUse)                                                                                                                                                                                   
+You can get a nation's metadata by calling
+`nationInstance.getNationMetaData(uint nationId)`, which will return the metadata of the specified nation                                                                                                                                                                                
 
 You can also use assistant functions to get other data from nations:
-`nationInstance.getNationName(uint nationId)`, which returns a string of the nation name or
 `nationInstance.numNations()`, which returns the current number of nations that exist.
 `nationInstance.getFoundedNations(address founder)`, which returns an array of nation ids that the founder has created.
 

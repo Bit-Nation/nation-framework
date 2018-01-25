@@ -37,6 +37,11 @@ contract('Citizens Testing', accounts => {
 				return nationInstance.getNumCitizens(1);
 			}).then(function(numCitizens) {
 				assert.equal(numCitizens, 2, "There should be 2 citizens in the nation.");
+
+				return nationInstance.getJoinedNations({from: accounts[8]});
+			}).then(function(nations) {
+				assert.equal(nations.length, 1, "There should be one nation that the account is in");
+				assert.equal(nations[0], 1, "The nation they are in should have an id of 1");
 			})
 	});
 

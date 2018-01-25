@@ -123,7 +123,11 @@ contract Nation is NationStorage, Initializable {
         require(numCitizensMapping[_nationId] - 1 < numCitizensMapping[_nationId]);
 
         //Remove nation from list of joined nation
-        delete joinedNations[msg.sender][_nationId];
+        uint i = 0;
+        while (joinedNations[msg.sender][i] != _nationId && i < joinedNations[msg.sender].length) {
+            i++;
+        }
+        delete joinedNations[msg.sender][i];
 
         citizensMapping[_nationId][msg.sender] = false;
         numCitizensMapping[_nationId]--;

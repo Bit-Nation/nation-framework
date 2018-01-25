@@ -22,10 +22,15 @@ contract('Nation Creation Testing', accounts => {
 	it('Should be able to create a nation and receive the create nation event', function() {
 		return Nation.deployed().then(function(instance) {
 			nationInstance = instance;
-			return nationInstance.createNation("CORE HASH/JSON STRINGIFY");
+			return nationInstance.createNation("METADATA");
 		}).then(function(txReceipt) {
 			assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
 			assert.equal(txReceipt.logs[0].event, "NationCreated", "Event emitted should have been NationCreated");
+
+			return nationInstance.getNationMetaData(1);
+		}).then(function(metadata) {
+			assert.equal(metadata, "METADATA", "The metadata should be METADATA");
+
 		})
 	});
 
