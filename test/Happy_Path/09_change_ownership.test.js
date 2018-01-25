@@ -39,7 +39,7 @@ contract('Change Owner Testing', accounts => {
 
 	it('successfully upgrades the nation', function() {
 
-		return UpgradedNation.new({from: accounts[0]}).then(function(upgradedImpl) {
+		return UpgradedNation.new({from: accounts[3]}).then(function(upgradedImpl) {
 			nation.upgradeNation(upgradedImpl.address, {from: accounts[3]});
 			nation = UpgradedNation.at(nationProxy.address);
 			return nation.isUpgraded();
