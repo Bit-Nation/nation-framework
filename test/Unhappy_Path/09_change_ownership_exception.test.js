@@ -19,10 +19,10 @@ contract('Nation Upgrade Testing', accounts => {
 	});
 
 	it('Should be able to create a nation core', function() {
-		return nation.createNationCore("USA", "United States of America", true, false)
+		return nation.createNation("CORE HASH/JSON STRINGIFY")
 			.then(function(txReceipt) {
 				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
-				assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
+				assert.equal(txReceipt.logs[0].event, "NationCreated", "Event emitted should have been NationCreated");
 			})
 	});
 

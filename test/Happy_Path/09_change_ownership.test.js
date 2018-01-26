@@ -5,7 +5,7 @@ let NationProxy = artifacts.require('./NationProxy.sol');
 // Test to see if the Nation can successfully upgrade itself to UpgradedNation
 // While also retaining it's data
 
-contract('Nation Upgrade Testing', accounts => {
+contract('Change Owner Testing', accounts => {
 
 	let nation = {};
 	let nationImpl = {};
@@ -19,10 +19,10 @@ contract('Nation Upgrade Testing', accounts => {
 	});
 
 	it('Should be able to create a nation core', function() {
-		return nation.createNationCore("USA", "United States of America", true, false)
+		return nation.createNation("CORE HASH/JSON STRINGIFY")
 			.then(function(txReceipt) {
 				assert.equal(txReceipt.logs.length, 1, "There should have been one event emitted");
-				assert.equal(txReceipt.logs[0].event, "NationCoreCreated", "Event emitted should have been NationCoreCreated");
+				assert.equal(txReceipt.logs[0].event, "NationCreated", "Event emitted should have been NationCreated");
 			})
 	});
 
@@ -39,7 +39,7 @@ contract('Nation Upgrade Testing', accounts => {
 
 	it('successfully upgrades the nation', function() {
 
-		return UpgradedNation.new({from: accounts[0]}).then(function(upgradedImpl) {
+		return UpgradedNation.new({from: accounts[3]}).then(function(upgradedImpl) {
 			nation.upgradeNation(upgradedImpl.address, {from: accounts[3]});
 			nation = UpgradedNation.at(nationProxy.address);
 			return nation.isUpgraded();

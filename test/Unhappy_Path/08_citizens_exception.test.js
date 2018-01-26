@@ -12,7 +12,7 @@ contract('Nation Core Creation Testing', accounts => {
 		let nationProxy = await NationProxy.new(nationImpl.address, {from: accounts[0]});
 		nationInstance = Nation.at(nationProxy.address, {from: accounts[0]});
 		nationInstance.initialize(accounts[0]);
-		await nationInstance.createNationCore("USA", "United states of America", true, false);
+		await nationInstance.createNation("CORE HASH/JSON STRINGIFY");
 	});
 
 	it("Should not be able to join a nation that hasn't been created", function() {

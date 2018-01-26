@@ -3,7 +3,7 @@ let NationProxy = artifacts.require('./NationProxy.sol');
 
 // Test to see if you can join and leave a nation
 
-contract('Nation Core Creation Testing', accounts => {
+contract('Citizens Testing', accounts => {
 
 	let nationInstance;
 
@@ -12,7 +12,7 @@ contract('Nation Core Creation Testing', accounts => {
 		let nationProxy = await NationProxy.new(nationImpl.address, {from: accounts[0]});
 		nationInstance = Nation.at(nationProxy.address, {from: accounts[0]});
 		nationInstance.initialize(accounts[0]);
-		await nationInstance.createNationCore("USA", "United states of America", true, false);
+		await nationInstance.createNation("CORE HASH/JSON STRINGIFY");
 	});
 
 	it("Should be able to join the created nation", function() {
@@ -37,6 +37,11 @@ contract('Nation Core Creation Testing', accounts => {
 				return nationInstance.getNumCitizens(1);
 			}).then(function(numCitizens) {
 				assert.equal(numCitizens, 2, "There should be 2 citizens in the nation.");
+
+				return nationInstance.getJoinedNations({from: accounts[8]});
+			}).then(function(nations) {
+				assert.equal(nations.length, 1, "There should be one nation that the account is in");
+				assert.equal(nations[0], 1, "The nation they are in should have an id of 1");
 			})
 	});
 
