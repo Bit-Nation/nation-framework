@@ -16,15 +16,15 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x60606040523415600e57600080fd5b609f8061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638b3dd749146044575b600080fd5b3415604e57600080fd5b6054606a565b6040518082815260200191505060405180910390f35b600080549050905600a165627a7a723058201d2df19d4d0291815267a0da4f8cfba23fd5e7abf744f9df9c62cbdaf1d6a82b0029",
-  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638b3dd749146044575b600080fd5b3415604e57600080fd5b6054606a565b6040518082815260200191505060405180910390f35b600080549050905600a165627a7a723058201d2df19d4d0291815267a0da4f8cfba23fd5e7abf744f9df9c62cbdaf1d6a82b0029",
+  "bytecode": "0x60606040523415600e57600080fd5b609f8061001c6000396000f300606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638b3dd749146044575b600080fd5b3415604e57600080fd5b6054606a565b6040518082815260200191505060405180910390f35b600080549050905600a165627a7a723058204a0d85c41c2eb63c30f7cf0d6fe0fafc0385155d45c77d9c0fc41be70eb3b93d0029",
+  "deployedBytecode": "0x606060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638b3dd749146044575b600080fd5b3415604e57600080fd5b6054606a565b6040518082815260200191505060405180910390f35b600080549050905600a165627a7a723058204a0d85c41c2eb63c30f7cf0d6fe0fafc0385155d45c77d9c0fc41be70eb3b93d0029",
   "sourceMap": "26:659:2:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "26:659:2:-;;;;;;;;;;;;;;;;;;;;;;;;468:111;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;527:7;553:19;;546:26;;468:111;:::o",
   "source": "pragma solidity ^0.4.18;\n\ncontract Initializable {\n    uint256 private initializationBlock;\n\n    modifier onlyInit {\n        require(initializationBlock == 0);\n        _;\n    }\n    /**\n    * @dev Function to be called by top level contract after initialization has finished.\n    */\n    function initialized() internal onlyInit {\n        initializationBlock = getBlockNumber();\n    }\n\n    /**\n    * @return Block number in which the contract was initialized\n    */\n    function getInitializationBlock() public constant returns (uint256) {\n        return initializationBlock;\n    }\n\n    function getBlockNumber() internal constant returns (uint256) {\n        return block.number;\n    }\n}\n",
-  "sourcePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/common/Initializable.sol",
+  "sourcePath": "/Users/florian/project/nation-framework/contracts/common/Initializable.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/common/Initializable.sol",
+      "absolutePath": "/Users/florian/project/nation-framework/contracts/common/Initializable.sol",
       "exportedSymbols": {
         "Initializable": [
           133
@@ -594,5 +594,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-25T22:54:31.103Z"
+  "updatedAt": "2018-01-26T13:32:16.033Z"
 }

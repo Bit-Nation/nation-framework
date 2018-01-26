@@ -1,15 +1,15 @@
 {
   "contractName": "DelegateProxy",
   "abi": [],
-  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a72305820dca54e81e80b63e10e3caa7abf9ea36786272260b54f73485b7906e3726a3ccf0029",
-  "deployedBytecode": "0x6060604052600080fd00a165627a7a72305820dca54e81e80b63e10e3caa7abf9ea36786272260b54f73485b7906e3726a3ccf0029",
+  "bytecode": "0x60606040523415600e57600080fd5b603580601b6000396000f3006060604052600080fd00a165627a7a723058208cea10140231c89adcfef711bc7876362917178efc0a3daa778dcf3794aaf2fd0029",
+  "deployedBytecode": "0x6060604052600080fd00a165627a7a723058208cea10140231c89adcfef711bc7876362917178efc0a3daa778dcf3794aaf2fd0029",
   "sourceMap": "26:1063:1:-;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "26:1063:1:-;;;;;",
   "source": "pragma solidity ^0.4.18;\n\ncontract DelegateProxy {\n    /**\n    * @dev Performs a delegatecall and returns whatever the delegatecall returned (entire context execution will return!)\n    * @param _dst Destination address to perform the delegatecall\n    * @param _calldata Calldata for the delegatecall\n    */\n    function delegatedFwd(address _dst, bytes _calldata) internal {\n        require(isContract(_dst));\n        assembly {\n        let result := delegatecall(sub(gas, 10000), _dst, add(_calldata, 0x20), mload(_calldata), 0, 0)\n        let size := returndatasize\n\n        let ptr := mload(0x40)\n        returndatacopy(ptr, 0, size)\n\n        // revert instead of invalid() bc if the underlying call failed with invalid() it already wasted gas.\n        // if the call returned error data, forward it\n        switch result case 0 { revert(ptr, size) }\n        default { return(ptr, size) }\n        }\n    }\n\n    function isContract(address _target) constant internal returns (bool) {\n        uint256 size;\n        assembly { size := extcodesize(_target) }\n        return size > 0;\n    }\n}\n",
-  "sourcePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/common/DelegateProxy.sol",
+  "sourcePath": "/Users/florian/project/nation-framework/contracts/common/DelegateProxy.sol",
   "ast": {
     "attributes": {
-      "absolutePath": "/Users/WilliamHuang/Developer/Job-Development/BitNation/nation-framework/contracts/common/DelegateProxy.sol",
+      "absolutePath": "/Users/florian/project/nation-framework/contracts/common/DelegateProxy.sol",
       "exportedSymbols": {
         "DelegateProxy": [
           90
@@ -522,5 +522,5 @@
   },
   "networks": {},
   "schemaVersion": "1.0.1",
-  "updatedAt": "2018-01-25T22:54:31.103Z"
+  "updatedAt": "2018-01-26T13:32:16.033Z"
 }
