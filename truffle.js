@@ -16,12 +16,14 @@ module.exports = {
 		},
 		"live": {
 			network_id: 1,
-			host: "localhost",
-			port: 8546
+            provider: function () {
+                return new HDWalletProvider('-', "https://mainnet.infura.io/bitnation")
+            },
+            gasPrice: 22000000000
 		},
 		"rinkeby": {
             provider: function () {
-				return new HDWalletProvider('662ee56d16eb0b88404214d1196d9abca3750a06ec184bbc821dbee6cd9996a1', "https://rinkeby.infura.io/metamask")
+				return new HDWalletProvider('-', "https://rinkeby.infura.io/bitnation")
             },
             gasPrice: 22000000000,
 			network_id: 4
