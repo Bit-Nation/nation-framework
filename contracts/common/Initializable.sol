@@ -1,3 +1,5 @@
+//This is originally a AragonOS file "DelegateProxy.sol" modified by William
+//Distributed under the GPL 3.0 license
 pragma solidity ^0.4.18;
 
 contract Initializable {

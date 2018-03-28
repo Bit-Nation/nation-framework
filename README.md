@@ -1,5 +1,8 @@
 # Bitnation Nation Framework
 
+## Credits
+We took a lot of inspiration (e.g. upgradable smart contracts) from the [aragon](https://aragon.one/) code base and architecture (and some files are just copied over since they are the solution we need). It's a great project and you should [check it out](https://aragon.one/) if you are interested in DAO's.
+
 ## Interface for use
 
 ### Nations Contract
@@ -95,6 +98,3 @@ which are all public variables so they can easily be accessed.
 - We are using [this](http://nvie.com/posts/a-successful-git-branching-model/) git workflow. Make sure you read it. 
 - PLEASE prefix your git commit's with a topic like so: `[git] blacklisted .idea folder`
 - Make SMALL commit's. It's then way better to follow your changes. 
-
-## Credits
-We took a lot of inspiration from the [aragon](https://aragon.one/) code base and architecture (and some files are just copied over since they are the solution we need). It's a great project and you should [check it out](https://aragon.one/) if you are interested in DAO's.
