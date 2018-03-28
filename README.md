@@ -1,5 +1,8 @@
 # Bitnation Nation Framework
 
+## Credits
+We took a lot of inspiration (e.g. upgradable smart contracts) from the [aragon](https://aragon.one/) code base and architecture (and some files are just copied over since they are the solution we need). It's a great project and you should [check it out](https://aragon.one/) if you are interested in DAO's.
+
 ## Interface for use
 
 ### Nations Contract

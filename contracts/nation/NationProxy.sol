@@ -1,3 +1,6 @@
+// This was based a AragonOS' proxy system modified by William
+// Distributed under the GPL 3.0 license
+
 pragma solidity ^0.4.18;
 
 import "./NationStorage.sol";
